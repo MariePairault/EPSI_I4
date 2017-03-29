@@ -1,0 +1,98 @@
+C:\Users\Marie>curl -v -X PUT -d name=test_marie -d description=test_marie -d url=marie-test.com http://rest-bookmarks.herokuapp.com/api/bookmarks/test_marie/
+*   Trying 54.243.110.17...
+* Connected to rest-bookmarks.herokuapp.com (54.243.110.17) port 80 (#0)
+> PUT /api/bookmarks/test_marie/ HTTP/1.1
+> Host: rest-bookmarks.herokuapp.com
+> User-Agent: curl/7.49.0
+> Accept: */*
+> Content-Length: 57
+> Content-Type: application/x-www-form-urlencoded
+>
+* upload completely sent off: 57 out of 57 bytes
+< HTTP/1.1 201 Created
+< Connection: close
+< Date: Wed, 29 Mar 2017 09:37:09 GMT
+< Server: Jetty(9.3.3.v20150827)
+< Via: 1.1 vegur
+<
+* Closing connection 0
+
+C:\Users\Marie>curl -v -H "accept: application/json" http://rest-bookmarks.herokuapp.com/api/bookmarks/test_marie/
+*   Trying 54.235.191.108...
+* Connected to rest-bookmarks.herokuapp.com (54.235.191.108) port 80 (#0)
+> GET /api/bookmarks/test_marie/ HTTP/1.1
+> Host: rest-bookmarks.herokuapp.com
+> User-Agent: curl/7.49.0
+> accept: application/json
+>
+< HTTP/1.1 200 OK
+< Connection: keep-alive
+< Date: Wed, 29 Mar 2017 09:38:13 GMT
+< Last-Modified: Wed, 29 Mar 2017 09:37:09 GMT
+< Vary: Accept
+< Etag: "37652055"
+< Link: <http://rest-bookmarks.herokuapp.com/api/bookmarks/test_marie/qrcode>; rel="http://bookmarks.epsi.fr/rels/qrcode"; title="QR code"; type="image/png"
+< Link: <marie-test.com>; rel="related"; title="Bookmarked link"
+< Link: <http://rest-bookmarks.herokuapp.com/api/bookmarks>; rel="collection"
+< Cache-Control: no-transform, max-age=60
+< Content-Type: application/json
+< Content-Length: 71
+< Server: Jetty(9.3.3.v20150827)
+< Via: 1.1 vegur
+<
+{"name":"test_marie","url":"marie-test.com","description":"test_marie"}* Connection #0 to host rest-bookmarks.herokuapp.com left intact
+
+C:\Users\Marie>curl -v -H "accept: text/html" http://rest-bookmarks.herokuapp.com/api/bookmarks/test_marie/
+*   Trying 54.235.191.108...
+* Connected to rest-bookmarks.herokuapp.com (54.235.191.108) port 80 (#0)
+> GET /api/bookmarks/test_marie/ HTTP/1.1
+> Host: rest-bookmarks.herokuapp.com
+> User-Agent: curl/7.49.0
+> accept: text/html
+>
+< HTTP/1.1 406 Not Acceptable
+< Connection: keep-alive
+< Date: Wed, 29 Mar 2017 09:39:30 GMT
+< Content-Type: text/html;charset=iso-8859-1
+< Cache-Control: must-revalidate,no-cache,no-store
+< Content-Length: 351
+< Server: Jetty(9.3.3.v20150827)
+< Via: 1.1 vegur
+<
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<title>Error 406 Not Acceptable</title>
+</head>
+<body><h2>HTTP ERROR 406</h2>
+<p>Problem accessing /api/bookmarks/test_marie/. Reason:
+<pre>    Not Acceptable</pre></p><hr><a href="http://eclipse.org/jetty">Powered by Jetty:// 9.3.3.v20150827</a><hr/>
+
+</body>
+</html>
+* Connection #0 to host rest-bookmarks.herokuapp.com left intact
+
+C:\Users\Marie>curl -i --header "If-modified-since: Wed, 29 Mar 2017 09:40:09 GMT" http://rest-bookmarks.herokuapp.com/api/bookmarks/test_marie/
+HTTP/1.1 304 Not Modified
+Content-Length: 0
+Connection: keep-alive
+Date: Wed, 29 Mar 2017 09:44:24 GMT
+Etag: "37652055"
+Server: Jetty(9.3.3.v20150827)
+Via: 1.1 vegur
+
+
+C:\Users\Marie>curl -i -X PUT -H "If-None-Match: *" -d name=test_marie -d description=test_marie -d url=marie-test.com http://rest-bookmarks.herokuapp.com/api/bookmarks/test_marie/
+HTTP/1.1 412 Precondition Failed
+Connection: close
+Date: Wed, 29 Mar 2017 09:46:40 GMT
+Server: Jetty(9.3.3.v20150827)
+Via: 1.1 vegur
+
+
+C:\Users\Marie>curl -i -X DELETE -H "If-Match: *" http://rest-bookmarks.herokuapp.com/api/bookmarks/test3000_marie/
+HTTP/1.1 412 Precondition Failed
+Connection: close
+Date: Wed, 29 Mar 2017 09:48:57 GMT
+Server: Jetty(9.3.3.v20150827)
+Via: 1.1 vegur
